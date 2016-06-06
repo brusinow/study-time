@@ -1,4 +1,9 @@
-var app = angular.module('StudyApp', ['ui.router', 'StudyCtrls'])
+var app = angular.module('StudyApp', ['ui.router', 'StudyCtrls','ngMaterial','ngMessages'])
+
+app.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('default')
+    .dark();
+});
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
