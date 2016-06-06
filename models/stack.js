@@ -1,16 +1,19 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var stack = sequelize.define('stack', {
-    name: DataTypes.STRING,
-    category: DataTypes.STRING,
-    public: DataTypes.BOOLEAN,
-    userId: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: function(models) {
-        models.stack.hasMany(models.card);
-      }
-    }
-  });
-  return stack;
-};
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var CardSchema = new mongoose.Schema({
+  question: String,
+  answer: String,
+  image: String,
+  category: String
+});
+
+var StackSchema = new mongoose.Schema({
+  name: String,
+  cards: [{ type: Number, ref: 'Cards' }]
+});
+
+var Cards  = mongoose.model('Cards', CardSchema);
+var Stack = mongoose.model('Stack', StackSchema);
+
+module.exports = mongoose.model('Stack', StackSchema);

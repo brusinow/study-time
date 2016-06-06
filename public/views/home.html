@@ -1,0 +1,8 @@
+<md-button class="md-raised"> Add a Card Stack </md-button>
+<ul>
+  <li ng-repeat="stack in stacks">
+    <a ng-href="/stacks/{{stack._id}}">
+      <div class="stack">{{stack.name}}</div>
+    </a>
+  </li>
+</ul>
