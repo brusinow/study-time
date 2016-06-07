@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt   = require('bcrypt');
 
 
@@ -6,7 +7,7 @@ var UserSchema = mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  stack: [{ type: Number, ref: 'Stack' }]
+  stacks: [{ type: Schema.Types.ObjectId, ref: 'Stack' }]
 });
 
 UserSchema.set('toJSON', {

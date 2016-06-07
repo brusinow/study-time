@@ -1,1 +1,26 @@
-<div class="card" ng-repeat="card in cards">{{card.question}}</div>
+<div ng-repeat="card in cards">
+
+  <div class="card col-xs-12 col-lg-3" ng-click="card.show=!card.show">
+    <div ng-hide="card.show" class="card-question">{{card.question}}</div>
+    <div ng-show="card.show" class="card-answer">{{card.answer}}</div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

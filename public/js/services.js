@@ -1,7 +1,7 @@
 angular.module('StudyServices', ['ngResource'])
 
 .factory('Stack', ['$resource', function($resource) {
-  return $resource('/api/recipes/:id');
+  return $resource('/api/stacks/:id');
 }])
 
 .factory('Auth', ['$window', function($window) {

@@ -14,8 +14,13 @@ app.config([
     templateUrl: 'views/home.html',
     controller: 'HomeCtrl'
   })
+  .state('newStack', {
+    url: '/stacks/new',
+    templateUrl: 'views/newStack.html',
+    controller: 'NewStackCtrl'
+  })
   .state('newCard', {
-    url: '/new',
+    url: '/card/new',
     templateUrl: 'views/newCard.html',
   })
   .state('stackShow', {
