@@ -7,7 +7,15 @@ var UserSchema = mongoose.Schema({
   name: String,
   email: String,
   password: String,
-  stacks: [{ type: Schema.Types.ObjectId, ref: 'Stack' }]
+  stacks: [{
+  name: String,
+    cards: [{
+      question: String,
+      answer: String,
+      image: String,
+      category: String
+    }]
+  }]
 });
 
 UserSchema.set('toJSON', {

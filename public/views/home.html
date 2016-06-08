@@ -1,13 +1,11 @@
-<md-button href="/stacks/new" class="md-raised"> Add a Card Stack </md-button>
+<md-button href="/stacks/new" class="add-btn md-raised"> Add a Card Stack </md-button>
 
 <ul>
   <li ng-repeat="stack in stacks">
-    <a ng-href="/stacks/{{stack._id}}">
-      <div class="stack">{{stack.name}}</div>
+    <md-button class="stack-delete-btn md-raised" ng-click="delete(stack._id, $index)" confirm="Are you sure?" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></md-button>
+    <a class="stack" ng-href="/stacks/{{stack._id}}">
+      {{stack.name}}
     </a>
-    <md-button class="md-primary md-raised" ng-click="showConfirm($event)" >
-      Delete
-    </md-button>
-     <a ng-click="deleteStack(stack._id, $index)" class="btn btn-danger">Delete</a>
+    
   </li>
 </ul>

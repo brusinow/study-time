@@ -20,8 +20,9 @@ app.config([
     controller: 'NewStackCtrl'
   })
   .state('newCard', {
-    url: '/card/new',
+    url: '/stacks/:id/card',
     templateUrl: 'views/newCard.html',
+    controller: 'NewCardCtrl'
   })
   .state('stackShow', {
     url: '/stacks/:id',

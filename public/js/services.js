@@ -1,8 +1,33 @@
-angular.module('StudyServices', ['ngResource'])
+angular.module('StudyServices', ['ngResource', 'ngMaterial'])
+
+
+
 
 .factory('Stack', ['$resource', function($resource) {
   return $resource('/api/stacks/:id');
 }])
+
+.factory('Card', ['$resource', function($resource) {
+  return $resource('/api/stacks/:id/card');
+}])
+
+
+.factory('verifyDeleteStack', function($mdDialog) {
+    //Include a reference to the user object we're deleting
+    return function(id, stacksIdx) {
+      
+    //Call the confirm() function to configure the confirmation dialog
+    var confirm = $mdDialog.confirm()
+        .title('Confirm Your Choice')
+        .content('Are you sure you want to delete this stack?')
+        .ariaLabel('Delete Stack')
+        .ok('Delete Stack')
+        .cancel('Cancel');
+        return $mdDialog.show(confirm);
+    }
+})
+
+
 
 .factory('Auth', ['$window', function($window) {
   return {
