@@ -2,7 +2,7 @@
 
 <ul>
   <li ng-repeat="stack in stacks">
-    <md-button class="stack-delete-btn md-raised" ng-click="delete(stack._id, $index)" confirm="Are you sure?" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></md-button>
+    <md-button class="stack-delete-btn md-raised" ng-click="delete(stack._id, $index)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></md-button>
     <a class="stack" ng-href="/stacks/{{stack._id}}">
       {{stack.name}}
     </a>

@@ -2,13 +2,13 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 
 
 studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
-  $scope.stacks = [];
- 
-  $scope.user = Auth.currentUser();
-  console.log(Auth.currentUser());
 
-  Stack.query($scope.user, function success(data) {
-    console.log(data);
+  var user = Auth.currentUser();
+  console.log(user);
+
+// This is working!
+  Stack.query(user, function success(data) {
+    console.log("This is some data: ",data);
     $scope.stacks = data;
 
 
@@ -17,7 +17,7 @@ studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteS
   });
 
 
-
+// Not Working
   $scope.delete = function(id, stacksIdx) {
       verifyDeleteStack(id).then(function() {
        Stack.delete({id: id}, function success(data) {
@@ -32,7 +32,7 @@ studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteS
 
 studyApp.controller('CardCtrl', ['$scope', '$stateParams', 'Stack','Card', function($scope, $stateParams, Stack, Card) {
   $scope.stackId = $stateParams.id;
-  $scope.cards = [{}]
+  $scope.cards = []
 
   Stack.get({id: $stateParams.id}, function success(data) {
     $scope.cards = data.cards;
@@ -92,7 +92,7 @@ studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', fun
   };
 
   $scope.createStack = function() {
-    console.log($scope.stack);
+    console.log($scope.user);
     console.log(Auth.currentUser());
     $scope.stack.user = Auth.currentUser();
     Stack.save($scope.stack, function success(data) {
@@ -150,7 +150,7 @@ studyApp.controller('SignupCtrl', ['$scope', '$http', '$location','Auth', functi
 studyApp.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', function($scope, $http, $location, Auth) {
   $scope.user = {
     email: '',
-    password: ''
+    password: '',
   };
   $scope.userLogin = function() {
     $http.post('/api/auth', $scope.user).then(function success(res) {
@@ -162,3 +162,7 @@ studyApp.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', functi
     });
   }
 }])
+
+
+
+
