@@ -19,9 +19,12 @@ studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteS
   });
 
 
-// Not Working
+
   $scope.delete = function(id, stacksIdx) {
+      console.log("id is: ",id);
+      console.log("stacksIdx: ",stacksIdx);
       verifyDeleteStack(id).then(function() {
+        console.log("made it through confirm");
        Stack.delete({id: id}, function success(data) {
       $scope.stacks.splice(stacksIdx, 1);
       }, function error(data) {
@@ -36,50 +39,45 @@ studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card
   $scope.cards = []
 
   $scope.stackId = $stateParams.id;
-  console.log($stateParams.id);
-  
-
-
+  console.log($stateParams);
 
   $http({
       method: 'GET',
-      url: '/api/stacks/' + $scope.stackId,
+      url: '/api/stacks/' + $stateParams.id,
       data: $stateParams.id
     }).then(function success(data) {
-       console.log("Success! ",data.data)
-
-       $scope.cards = data.data;
+       console.log("Success! ",data.data.name);
+       $scope.stackName = data.data.name;
+       $scope.cards = data.data.cards;
     }, function error(data) {
       console.log("Nope.")
     });
 
 
-
-  // Stack.get({id: $stateParams.id}, function success(data) {
-  //   console.log(data);
-  //   // $scope.cards = data.stacks.cards;
-  //   // console.log($scope.cards);
-  // }, function error(data) {
-  //   console.log(data);
-  // });
-
-
-
-
-
-
   $scope.delete = function(id, cardIdx) {
     console.log("Card id is: ",id);
     console.log("Index of card is: ",cardIdx)
-  Card.delete({id: id}, function success(data) {
-    console.log("data is: ",data);
-    $scope.cards.splice(cardIdx, 1);
-  }, function error(data) {
-    console.log(data);
-  });
+    var cardId = id;
+
+$http.delete('/api/stacks/'+ $stateParams.id + '/card/' + cardId, {params: {cardId: cardId}
+}).then(function success(data) {
+         console.log("Success! ",data);
+        $scope.cards.splice(cardIdx, 1);
+      }, function error(data) {
+        console.log("Nope.")
+      });
   }
 
+  
 
+// $http.delete('/roles/' + roleid, {params: {userId: userID}}).then...
+  // Card.delete({id: id}, function success(data) {
+  //   console.log("data is: ",data);
+  //   $scope.cards.splice(cardIdx, 1);
+  // }, function error(data) {
+  //   console.log(data);
+  // });
+  // }
 }])
 
 studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stack', 'Auth','$http', function($scope, $location, $stateParams, Stack, Auth, $http) {

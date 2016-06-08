@@ -1,5 +1,6 @@
 ul {
   list-style: none;
+  padding: 0;
 }
 li {
   line-height: 50px;
@@ -14,9 +15,25 @@ li {
   display: block;
 }
 
+.back-btn {
+  margin: 0px;
+}
+
+.stack-list-item {
+  width:100%;
+  position:relative;
+  background-color: #eeeeee;
+  text-align: center;
+  padding: 4px;
+  outline: none;
+  margin-bottom: 4px;
+}
+
 .stack-delete-btn{
+  position: absolute;
+  left:0;
+  bottom: 8px;
   display: inline-block;
-  vertical-align: top;
 }
 
 .container {
@@ -61,6 +78,7 @@ li {
   margin:15px;
   color:black;
   line-height:30px;
+  outline: none;
 }
 
 .stack {

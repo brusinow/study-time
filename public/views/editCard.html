@@ -1,0 +1,13 @@
+<h1>Edit Card</h1>
+
+<form ng-submit="createCard()">
+  <div class="form-group">
+    <label for="question">Question:</label>
+    <input type="text" class="form-control" id="question" ng-model="question">
+  </div>
+   <div class="form-group">
+    <label for="answer">Answer:</label>
+  <textarea class="form-control" rows="5" id="answer" ng-model="answer"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

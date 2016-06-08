@@ -2,12 +2,29 @@
 
 <form ng-submit="createCard()">
   <div class="form-group">
-    <label for="question">Question</label>
+    <label for="question">Question:</label>
     <input type="text" class="form-control" id="question" ng-model="question">
   </div>
    <div class="form-group">
-    <label for="answer">Answer</label>
-    <input type="text" class="form-control" id="answer" ng-model="answer">
+    <label for="answer">Answer:</label>
+  <textarea class="form-control" rows="5" id="answer" ng-model="answer"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<!-- <form ng-submit="createCard()" name="userForm">
+  <md-input-container>
+    <label>Question:</label>
+    <input name="Question" ng-model="question" minlength="10">
+      <div ng-message="required">This is required!</div>
+      <div ng-message="minlength">That's too short!</div>
+    </div>
+  </md-input-container>
+  <br>
+  <md-input-container>
+    <label>Answer:</label>
+    <textarea name="Answer" ng-model="answer" required md-maxlength="500"></textarea>
+      <div ng-message="required">This is required!</div>
+      <div ng-message="md-maxlength">That's too long!</div>
+  </md-input-container>
+</form> -->

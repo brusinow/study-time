@@ -1,23 +1,29 @@
-<md-button href="/stacks/{{stackId}}/card" class="add-btn md-raised"> Add a Card to Stack </md-button>
-<div class="inset" ng-controller="SwitchDemoCtrl" ng-cloak>
-<!--   <md-switch ng-model="data.cb1" aria-label="Switch 1">
-    Public Stack: {{ data.cb1 }}
-  </md-switch> -->
-<div ng-repeat="card in cards">
-  <div class="card col-xs-12 col-lg-4" ng-click="card.show=!card.show">
-    <div ng-hide="card.show" class="card-question">
-      <p>Question:</p>
-      <p>{{card.question}}</p>
-    </div>
-    <div ng-show="card.show" class="card-answer">
-      <p>Answer:</p>
-      <p>{{card.answer}}</p>
+<div class="row">
+  <div class="col-xs-12 col-lg-4">
+    <md-button href="/" class="back-btn md-raised">Back</md-button>
   </div>
-  <div ng-click="delete(card._id, $index)" confirm="Are you sure?" class="delete-card"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
-  </div>
-
 </div>
-
+<div class="row">
+  <h2 style="text-align: center; margin-top:0px;">{{stackName}}</h2>
+  <div class="col-xs-12 col-lg-4 col-lg-offset-4">
+    <md-button href="/stacks/{{stackId}}/card" class="add-btn md-raised"> Add a Card to Stack </md-button>
+  </div>
+</div>
+<div class="row">
+  <div ng-repeat="card in cards">
+    <div class="card col-xs-12 col-lg-4" ng-click="card.show=!card.show">
+      <div ng-hide="card.show" class="card-question">
+        <p>Question:</p>
+        <p>{{card.question}}</p>
+      </div>
+      <div ng-show="card.show" class="card-answer">
+        <p>Answer:</p>
+        <p>{{card.answer}}</p>
+    </div>
+    <div ng-click="delete(card._id, $index)" confirm="Are you sure?" class="delete-card"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
+    </div>
+  </div>
+</div>
 
 
 

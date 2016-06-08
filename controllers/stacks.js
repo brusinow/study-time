@@ -37,11 +37,14 @@ router.route('/')
 
 router.route('/:id')
   .get(function(req, res) {
-    User.findOne({"stacks._id" : req.params.id}, 
+    console.log(req.params.id);
+    User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
       function(err, stack) {
+        // console.log("stack is: ",stack[0].stacks[0]);
+        var stackCards = stack[0].stacks[0];
       if (err) return res.status(500).send(err);
-      console.log("I want: ",stack.stacks[0].cards);
-      var stackCards = stack.stacks[0].cards
+      // console.log("I want: ",stack.stacks[0].cards);
+      // var stackCards = stack.stacks[0].cards
       res.send(stackCards);
     });
   })
@@ -55,8 +58,8 @@ router.route('/:id')
   .delete(function(req, res) {
     console.log("params should be: ",req.params.id);
     User.update(
-    { _id: req.params.id },
-    { $pull: { 'stacks': { _id: req.params.id } } },
+    {},
+    { "$pull": { 'stacks': {"_id" : req.params.id} } },
     function(err){
       if (err) return res.status(500).send(err);
       console.log("success?");
@@ -92,23 +95,17 @@ router.route('/:id/card')
     // })
   })
 
-// Model.update(
-//     { "array1.array2._id": "123" },
-//     { "$push": { "array1.0.array2.$.answeredBy": "success" } },
-//     function(err,numAffected) {
-//        // something with the result in here
-//     }
-// );
-// {$push: {cards: req.body}}
 
 
 
-
-
-router.route('/:id/card')
+router.route('/:id/card/:id')  
   .delete(function(req, res) {
-    console.log("req is: ",req);
-    Stack.findByIdAndRemove(req.params.id, function(err) {
+    console.log("hitting card delete route");
+    console.log("req.params is: ",req.params);
+    User.update(
+    {"stacks.cards._id": req.params.id},
+    { "$pull": { "stacks.$.cards": {"_id" : req.params.id}}},
+     function(err) {
       if (err) return res.status(500).send(err);
       res.send({'message': 'success'});
     });
@@ -116,4 +113,19 @@ router.route('/:id/card')
 
 
 
+
+
+
+
+// .delete(function(req, res) {
+//     console.log("params should be: ",req.params.id);
+//     User.update(
+//     {},
+//     { "$pull": { 'stacks': {"_id" : req.params.id} } },
+//     function(err){
+//       if (err) return res.status(500).send(err);
+//       console.log("success?");
+//       res.send({'message': 'success'});
+//     }
+//     );
 module.exports = router;
