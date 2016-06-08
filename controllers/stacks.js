@@ -48,13 +48,6 @@ router.route('/:id')
       res.send(stackCards);
     });
   })
-
-  .put(function(req, res) {
-    Stack.findByIdAndUpdate(req.params.id, req.body, function(err) {
-      if (err) return res.status(500).send(err);
-      res.send({'message': 'success'});
-    });
-  })
   .delete(function(req, res) {
     console.log("params should be: ",req.params.id);
     User.update(
@@ -66,16 +59,34 @@ router.route('/:id')
       res.send({'message': 'success'});
     }
     );
-
-
-
-
-    // User.findByIdAndRemove(req.params.id, function(err) {
-    //   if (err) return res.status(500).send(err);
-    //   console.log("success?");
-    //   res.send({'message': 'success'});
-    // });
   });
+
+
+router.route('/:id/edit')
+  .get(function(req,res){
+    User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
+      function(err, stack) {
+        // console.log("stack is: ",stack);
+        var stackCards = stack[0].stacks[0];
+      if (err) return res.status(500).send(err);
+      // console.log("I want: ",stack.stacks[0].cards);
+      // var stackCards = stack.stacks[0].cards
+      res.send(stackCards);
+    });
+  })
+  .post(function(req,res){
+    console.log("Req.body for editStack route is: ",req.body);
+    console.log("should be stack id: ",req.params.id);
+    User.update(
+      {"stacks._id": req.params.id},
+      { "$set" : {"stacks.0": req.body}},
+   
+      function(err, stack) {
+      if (err) return res.status(500).send(err);
+      res.send(stack);
+    });
+  });
+
 
 
 router.route('/:id/card')

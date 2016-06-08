@@ -19,10 +19,20 @@ app.config([
     templateUrl: 'views/newStack.html',
     controller: 'NewStackCtrl'
   })
+   .state('editStack', {
+    url: '/stacks/:id/edit',
+    templateUrl: 'views/editStack.html',
+    controller: 'EditStackCtrl'
+  })
   .state('newCard', {
     url: '/stacks/:id/card',
     templateUrl: 'views/newCard.html',
     controller: 'NewCardCtrl'
+  })
+  .state('editCard', {
+    url: '/stacks/:id/card/edit',
+    templateUrl: 'views/editCard.html',
+    controller: 'EditCardCtrl'
   })
   .state('stackShow', {
     url: '/stacks/:id',

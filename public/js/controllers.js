@@ -35,6 +35,66 @@ studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteS
 
 }])
 
+studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', function($scope, $location, Stack, Auth) {
+  $scope.stack = {
+    name: ''
+  };
+
+
+
+  $scope.createStack = function() {
+    console.log($scope.user);
+    console.log(Auth.currentUser());
+    $scope.stack.user = Auth.currentUser();
+    Stack.save($scope.stack, function success(data) {
+      console.log("Success! ",data)
+      $location.path('/');
+    }, function error(data) {
+      console.log(data);
+    });
+  }
+}])
+
+
+studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$stateParams', 'Stack','Card', function($scope, $http, $location, $stateParams, Stack, Card) {
+  $http({
+      method: 'GET',
+      url: '/api/stacks/' + $stateParams.id + '/edit',
+      data: $stateParams.id
+    }).then(function success(data) {
+       console.log("Success! ",data.data);
+       $scope.stack = data.data;
+       $scope.cards = data.data.cards;
+    }, function error(data) {
+      console.log("Nope.")
+    });
+
+
+    $scope.editStack = function() {
+    $http({
+      method: 'POST',
+      url: '/api/stacks/' + $stateParams.id + '/edit',
+      data: $scope.stack
+    }).then(function success(data) {
+       console.log("Success! ",data)
+      $location.path('/stacks/'+ $stateParams.id);
+    }, function error(data) {
+      console.log("Nope.")
+    });
+
+    // Stack.save($scope.stack, function success(data) {
+    //   console.log("Success! ",data)
+    //   $location.path('/');
+    // }, function error(data) {
+    //   console.log(data);
+    // });
+  }
+
+}])
+
+
+
+
 studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card', function($scope, $http, $stateParams, Stack, Card) {
   $scope.cards = []
 
@@ -116,25 +176,7 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
   }
 }])
 
-studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', function($scope, $location, Stack, Auth) {
-  $scope.stack = {
-    name: ''
-  };
 
-
-
-  $scope.createStack = function() {
-    console.log($scope.user);
-    console.log(Auth.currentUser());
-    $scope.stack.user = Auth.currentUser();
-    Stack.save($scope.stack, function success(data) {
-      console.log("Success! ",data)
-      $location.path('/');
-    }, function error(data) {
-      console.log(data);
-    });
-  }
-}])
 
 
 
