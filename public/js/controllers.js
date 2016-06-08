@@ -3,12 +3,12 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 
 studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
 
-  var user = Auth.currentUser();
+  $scope.user = Auth.currentUser();
   console.log(Auth.currentUser());
   console.log(Auth.isLoggedIn());
 
 // This is working!
-  Stack.query(user, function success(data) {
+  Stack.query($scope.user, function success(data) {
     console.log("This is some data: ",data);
     $scope.stacks = data;
 
@@ -193,11 +193,12 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
   };
 });
 
-studyApp.controller('NavCtrl', ['$scope', 'Auth', function($scope, Auth) {
+studyApp.controller('NavCtrl', ['$scope', '$location', 'Auth', function($scope, $location, Auth) {
   $scope.Auth = Auth;
   $scope.logout = function() {
     Auth.removeToken();
     console.log('My token:', Auth.getToken());
+    $location.path('/');
   }
 }])
 

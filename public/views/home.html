@@ -1,6 +1,6 @@
-<md-button href="/stacks/new" class="add-btn md-raised"> Add a Card Stack </md-button>
+<md-button ng-show="user" href="/stacks/new" class="add-btn md-raised"> Add a Card Stack </md-button>
 
-<ul>
+<ul ng-show="user">
   <li ng-repeat="stack in stacks">
     <div class="stack-list-item">
     <md-button class="stack-delete-btn md-raised" ng-click="delete(stack._id, $index)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></md-button>
