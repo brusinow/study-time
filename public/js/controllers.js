@@ -4,12 +4,14 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
 
   var user = Auth.currentUser();
-  console.log(user);
+  console.log(Auth.currentUser());
+  console.log(Auth.isLoggedIn());
 
 // This is working!
   Stack.query(user, function success(data) {
     console.log("This is some data: ",data);
     $scope.stacks = data;
+
 
 
   }, function error(data) {
@@ -30,16 +32,41 @@ studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteS
 
 }])
 
-studyApp.controller('CardCtrl', ['$scope', '$stateParams', 'Stack','Card', function($scope, $stateParams, Stack, Card) {
-  $scope.stackId = $stateParams.id;
+studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card', function($scope, $http, $stateParams, Stack, Card) {
   $scope.cards = []
 
-  Stack.get({id: $stateParams.id}, function success(data) {
-    $scope.cards = data.cards;
-    console.log($scope.cards);
-  }, function error(data) {
-    console.log(data);
-  });
+  $scope.stackId = $stateParams.id;
+  console.log($stateParams.id);
+  
+
+
+
+  $http({
+      method: 'GET',
+      url: '/api/stacks/' + $scope.stackId,
+      data: $stateParams.id
+    }).then(function success(data) {
+       console.log("Success! ",data.data)
+
+       $scope.cards = data.data;
+    }, function error(data) {
+      console.log("Nope.")
+    });
+
+
+
+  // Stack.get({id: $stateParams.id}, function success(data) {
+  //   console.log(data);
+  //   // $scope.cards = data.stacks.cards;
+  //   // console.log($scope.cards);
+  // }, function error(data) {
+  //   console.log(data);
+  // });
+
+
+
+
+
 
   $scope.delete = function(id, cardIdx) {
     console.log("Card id is: ",id);
@@ -56,6 +83,10 @@ studyApp.controller('CardCtrl', ['$scope', '$stateParams', 'Stack','Card', funct
 }])
 
 studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stack', 'Auth','$http', function($scope, $location, $stateParams, Stack, Auth, $http) {
+  
+
+
+  
   $scope.stack = {
     cards: [{
       question: "",
@@ -64,12 +95,13 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
   };
   
 
-  var stackId = $stateParams.id;
+
+ var stackId = $stateParams.id;
   console.log("Stack id is: ",stackId);
   $scope.createCard = function() {
     var newCard = {
       question: $scope.question,
-      answer: $scope.answer
+      answer: $scope.answer,
     }
     console.log("new card is: ",newCard);
     $http({
@@ -90,6 +122,8 @@ studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', fun
   $scope.stack = {
     name: ''
   };
+
+
 
   $scope.createStack = function() {
     console.log($scope.user);

@@ -37,10 +37,12 @@ router.route('/')
 
 router.route('/:id')
   .get(function(req, res) {
-    User.find({"user.stacks" : req.params.id}, function(err, stack) {
+    User.findOne({"stacks._id" : req.params.id}, 
+      function(err, stack) {
       if (err) return res.status(500).send(err);
-      console.log("stack is coming back as: ",stack);
-      // res.send(stack);
+      console.log("I want: ",stack.stacks[0].cards);
+      var stackCards = stack.stacks[0].cards
+      res.send(stackCards);
     });
   })
 
@@ -76,7 +78,11 @@ router.route('/:id')
 router.route('/:id/card')
   .post(function(req,res){
     console.log("Req.body for newCard route is: ",req.body);
-    User.update({_id: req.params.id}, {$push: {cards: req.body}}, function(err, stack) {
+    console.log("Id from params is: ",req.params.id)
+    User.update(
+      {"stacks._id": req.params.id},
+      { "$push": { "stacks.$.cards": req.body } },
+      function(err, stack) {
       if (err) return res.status(500).send(err);
       res.send(stack);
     });
@@ -84,9 +90,16 @@ router.route('/:id/card')
     //  if (err) return res.status(500).send(err);
     //  res.send(stack);  
     // })
-  });
+  })
 
-
+// Model.update(
+//     { "array1.array2._id": "123" },
+//     { "$push": { "array1.0.array2.$.answeredBy": "success" } },
+//     function(err,numAffected) {
+//        // something with the result in here
+//     }
+// );
+// {$push: {cards: req.body}}
 
 
 
