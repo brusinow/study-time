@@ -269,8 +269,7 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
 
 studyApp.controller('NavCtrl', ['$scope', '$location', 'Auth', function($scope, $location, Auth) {
   $scope.Auth = Auth;
-  var user = Auth.currentUser();
-  $scope.username = user._doc.username;
+  
   $scope.logout = function() {
     Auth.removeToken();
     console.log('My token:', Auth.getToken());
