@@ -46,7 +46,7 @@ router.route("/community/:id")
         console.log("stack is: ",stack);
         // var stackCards = stack[0].stacks[0];
       if (err) return res.status(500).send(err);
-      console.log("I want: ",stack[0].stacks[0]);
+      // console.log("I want: ",stack);
       var stack = stack[0].stacks[0]
       res.send(stack);
     });

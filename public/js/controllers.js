@@ -64,7 +64,7 @@ console.log($stateParams.id);
       method: 'GET',
       url: '/api/stacks/community/'+$stateParams.id
     }).then(function success(data) {
-       console.log("Success! ",data.data);
+       console.log("Success! ",data);
        $scope.stack = data.data;
        $scope.cards = data.data.cards;
 
@@ -269,6 +269,8 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
 
 studyApp.controller('NavCtrl', ['$scope', '$location', 'Auth', function($scope, $location, Auth) {
   $scope.Auth = Auth;
+  var user = Auth.currentUser();
+  $scope.username = user._doc.username;
   $scope.logout = function() {
     Auth.removeToken();
     console.log('My token:', Auth.getToken());
