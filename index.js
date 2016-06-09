@@ -3,13 +3,16 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var expressJWT = require('express-jwt');
 var jwt = require('jsonwebtoken');
+// var env = process.env.NODE_ENV || 'deployment';
 var app = express();
+
 
 var secret = "mysupersecretpassword";
 
 var mongoose = require('mongoose');
 var User = require('./models/user');
-mongoose.connect('mongodb://localhost/study_time');
+mongoose.connect("mongodb://"+process.env.DBUSER+":"+process.env.DBPASSWORD+"@ds011314.mlab.com:11314/studytime");
+// mongoose.connect("mongodb://localhost/dbname");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -44,4 +47,4 @@ app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000)
