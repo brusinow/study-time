@@ -1,6 +1,11 @@
 <h1>New Stack</h1>
 
 <form ng-submit="createStack()">
+  <div class="inset" ng-controller="SwitchDemoCtrl" ng-cloak>
+  <md-switch ng-model="stack.public" aria-label="switch">
+    Public: {{ stack.public }}
+  </md-switch>
+  </div>
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" class="form-control" id="title" ng-model="stack.name">

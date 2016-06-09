@@ -5,6 +5,13 @@ ul {
 li {
   line-height: 50px;
 }
+.logged-email {
+  margin-left: 10px;
+  color: white;
+  text-align: center;
+/*  padding: 15px 0px;*/
+  line-height: 50px;
+}
 
 .md-button {
   min-width: 36px;
@@ -36,11 +43,32 @@ li {
   display: inline-block;
 }
 
+.stack-edit-btn{
+  position: absolute;
+  left:40px;
+  bottom: 8px;
+  display: inline-block;
+}
+
 .container {
   background-color:white;
 }
 
 .card {
+  outline: none;
+}
+
+.card h3 {
+  font-size: 18px;
+}
+
+.card h2 {
+  font-size: 24px;
+  font-style: italic;
+}
+
+.card-click-area {
+  height: 80%;
   outline: none;
 }
 
@@ -56,6 +84,8 @@ li {
 }
 
 
+
+
 .card-answer {
   position: relative;
   height: 200px;
@@ -66,6 +96,21 @@ li {
   color: white;
   margin-bottom: 10px;
 }
+
+.edit-card {
+  position:absolute;
+  text-align: center;
+  bottom:0;
+  right:40px;
+  background-color: white;
+  width:30px;
+  height:30px;
+  margin:15px;
+  color:black;
+  line-height:30px;
+  outline: none;
+}
+
 
 .delete-card {
   position:absolute;
@@ -83,7 +128,14 @@ li {
 
 .stack {
   text-align: center;
-  font-size:30px;
+  font-size:24px;
+  font-weight: bold;
+  margin-left: 70px;
+}
+
+.stack-community {
+  text-align: center;
+  font-size:24px;
   font-weight: bold;
 }
 

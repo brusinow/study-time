@@ -1,4 +1,8 @@
-var app = angular.module('StudyApp', ['StudyCtrls','ui.router','ngMaterial','ngMessages']);
+var app = angular.module('StudyApp', ['StudyCtrls','ui.router','ngMaterial','ngMessages','ui.bootstrap']);
+
+function NavBarCtrl($scope) {
+    $scope.isCollapsed = true;
+}
 
 app.config([
   '$stateProvider',
@@ -13,6 +17,16 @@ app.config([
     url: '/',
     templateUrl: 'views/home.html',
     controller: 'HomeCtrl'
+  })
+  .state('community', {
+    url: '/stacks/community',
+    templateUrl: 'views/community.html',
+    controller: 'CommunityCtrl'
+  })
+  .state('communityShow', {
+  url: '/stacks/community/:id',
+  templateUrl: 'views/communityShow.html',
+  controller: 'CommunityShowCtrl'
   })
   .state('newStack', {
     url: '/stacks/new',
@@ -30,7 +44,7 @@ app.config([
     controller: 'NewCardCtrl'
   })
   .state('editCard', {
-    url: '/stacks/:id/card/edit',
+    url: '/stacks/:stackId/:cardId/card/edit',
     templateUrl: 'views/editCard.html',
     controller: 'EditCardCtrl'
   })

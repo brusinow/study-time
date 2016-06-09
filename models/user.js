@@ -4,10 +4,12 @@ var bcrypt   = require('bcrypt');
 
 
 var UserSchema = mongoose.Schema({
+  username: String,
   email: String,
   password: String,
   stacks: [{
   name: String,
+  public: Boolean,
     cards: [{
       question: String,
       answer: String,

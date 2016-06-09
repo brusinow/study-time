@@ -1,11 +1,14 @@
-var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngRoute"])
+var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngRoute", "ui.bootstrap"])
 
 
 studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
 
   $scope.user = Auth.currentUser();
-  console.log(Auth.currentUser());
+ 
   console.log(Auth.isLoggedIn());
+  $scope.Auth = Auth;
+ 
+
 
 // This is working!
   Stack.query($scope.user, function success(data) {
@@ -35,12 +38,56 @@ studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteS
 
 }])
 
+studyApp.controller('CommunityCtrl', ['$scope','$stateParams', '$http', 'Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, $http, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
+
+ $http({
+      method: 'GET',
+      url: '/api/stacks/community/'
+    }).then(function success(data) {
+       console.log("Success! ",data.data);
+       $scope.stacks = data.data;
+    }, function error(data) {
+      console.log("Nope.")
+    });
+
+
+
+
+
+}])
+
+
+studyApp.controller('CommunityShowCtrl', ['$scope','$stateParams', '$http', 'Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, $http, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
+console.log($stateParams.id);
+
+ $http({
+      method: 'GET',
+      url: '/api/stacks/community/'+$stateParams.id
+    }).then(function success(data) {
+       console.log("Success! ",data.data);
+       $scope.stack = data.data;
+       $scope.cards = data.data.cards;
+
+    }, function error(data) {
+      console.log("Nope.")
+    });
+
+
+
+
+
+}])
+
+
+
 studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', function($scope, $location, Stack, Auth) {
   $scope.stack = {
-    name: ''
+    name: '',
+    public: ""
   };
 
 
+  
 
   $scope.createStack = function() {
     console.log($scope.user);
@@ -71,32 +118,27 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
 
 
     $scope.editStack = function() {
-    $http({
-      method: 'POST',
-      url: '/api/stacks/' + $stateParams.id + '/edit',
-      data: $scope.stack
-    }).then(function success(data) {
-       console.log("Success! ",data)
-      $location.path('/stacks/'+ $stateParams.id);
-    }, function error(data) {
-      console.log("Nope.")
-    });
-
-    // Stack.save($scope.stack, function success(data) {
-    //   console.log("Success! ",data)
-    //   $location.path('/');
-    // }, function error(data) {
-    //   console.log(data);
-    // });
-  }
+      $http({
+        method: 'POST',
+        url: '/api/stacks/' + $stateParams.id + '/edit',
+        data: $scope.stack
+      }).then(function success(data) {
+         console.log("Success! ",data)
+        $location.path('/stacks/'+ $stateParams.id);
+      }, function error(data) {
+        console.log("Nope.")
+      });
+    }
 
 }])
 
 
 
 
-studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card', function($scope, $http, $stateParams, Stack, Card) {
+studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card', 'Auth', function($scope, $http, $stateParams, Stack, Card, Auth) {
   $scope.cards = []
+
+  $scope.loggedIn = Auth.isLoggedIn();
 
   $scope.stackId = $stateParams.id;
   console.log($stateParams);
@@ -176,7 +218,41 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
   }
 }])
 
+studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$stateParams', 'Stack','Card', function($scope, $http, $location, $stateParams, Stack, Card) {
+ 
+ console.log($stateParams);
 
+
+  $http({
+      method: 'GET',
+      url: '/api/stacks/' + $stateParams.stackId + '/'+$stateParams.cardId+'/card/edit',
+      data: $stateParams
+    }).then(function success(data) {
+       console.log("Success! ",data.data);
+       $scope.question = data.data.question;
+       $scope.answer = data.data.answer;
+    }, function error(data) {
+      console.log("Nope.")
+    });
+
+
+    $scope.editCard = function() {
+      $http({
+        method: 'POST',
+        url: '/api/stacks/' + $stateParams.stackId + '/'+$stateParams.cardId+'/card/edit',
+        data: {
+          question: $scope.question,
+          answer: $scope.answer
+        }
+      }).then(function success(data) {
+         console.log("Success! ",data)
+        $location.path('/stacks/'+ $stateParams.stackId);
+      }, function error(data) {
+        console.log("Nope.")
+      });
+    }
+
+}])
 
 
 
@@ -184,10 +260,8 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
 
 
 .controller('SwitchDemoCtrl', function($scope) {
-  $scope.data = {
-    cb1: true,
-  };
-  $scope.message = 'false';
+  $scope.stack.public = false
+ $scope.message = 'false';
   $scope.onChange = function(cbState) {
     $scope.message = cbState;
   };
@@ -198,12 +272,12 @@ studyApp.controller('NavCtrl', ['$scope', '$location', 'Auth', function($scope, 
   $scope.logout = function() {
     Auth.removeToken();
     console.log('My token:', Auth.getToken());
-    $location.path('/');
   }
 }])
 
 studyApp.controller('SignupCtrl', ['$scope', '$http', '$location','Auth', function($scope, $http, $location, Auth) {
   $scope.user = {
+    username: '',
     email: '',
     password: ''
   };
