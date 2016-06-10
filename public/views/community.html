@@ -1,10 +1,14 @@
 <h2>Community Stacks</h2>
-<ul>
-  <li ng-repeat="stack in stacks">
-    <div class="stack-list-item">
-    <a class="stack-community" ng-href="/stacks/community/{{stack.stacks._id}}">
-      {{stack.stacks.name}}
-    </a><span>by {{stack.username}}</span>
-    </div>
-  </li>
-</ul>
+<div class="row">
+  <div class="center-text col-xs-12 col-lg-6 col-lg-offset-3">
+    <ul>
+      <li ng-repeat="stack in stacks">
+        <div class="stack-list-item-community">
+        <a class="stack-community" ng-href="/stacks/community/{{stack.stacks._id}}">
+          {{stack.stacks.name}}
+        </a><span>by {{stack.username}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

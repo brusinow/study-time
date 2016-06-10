@@ -1,19 +1,21 @@
 <h2>New Card</h2>
-
-<form ng-submit="createCard()">
-  <div class="form-group">
-    <label for="question">Question:</label>
-    <input type="text" class="form-control" id="question" ng-model="question">
+<div class="row">
+  <div class="center-text col-xs-12 col-lg-6 col-lg-offset-3">
+    <form ng-submit="createCard()">
+      <div class="form-group">
+        <label for="question">Question:</label>
+        <input type="text" class="form-control" id="question" ng-model="question">
+      </div>
+      <div class="form-group">
+        <label for="answer">Answer:</label>
+        <textarea class="form-control" rows="5" id="answer" ng-model="answer"></textarea>
+      </div>
+      <div class="center-text">
+        <md-button type="submit" class="submit-btn md-raised">Submit</md-button>
+      </div>
+    </form>
   </div>
-   <div class="form-group">
-    <label for="answer">Answer:</label>
-  <textarea class="form-control" rows="5" id="answer" ng-model="answer"></textarea>
-  </div>
-  <div class="center-text">
-   <md-button type="submit" class="submit-btn md-raised">Submit</md-button>
- </div>
-</form>
-
+</div>
 <!-- <form ng-submit="createCard()" name="userForm">
   <md-input-container>
     <label>Question:</label>

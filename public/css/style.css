@@ -4,6 +4,10 @@ h2, h3, h4 {
   font-weight: 700;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -164,6 +168,18 @@ nav {
   margin-bottom: 4px;
 }
 
+.stack-list-item-community {
+  width:100%;
+  font-size:20px;
+  position:relative;
+  background-color: #eeeeee;
+  text-align: center;
+  margin-left: 0px;
+  padding: 4px;
+  outline: none;
+  margin-bottom: 4px;
+}
+
 .stack-community {
   text-align: center;
   font-size:24px;
@@ -263,5 +279,34 @@ nav {
 
 
 
+@media (max-width: 640px){
+  .stack {
+    padding-left: 100px;
+  }
+  .stack-list-item {
+    font-size: 14px;
+    text-align: left;
+    padding: 4px;
+  }
+   .stack-list-item-community {
+    font-size: 14px;
+    text-align: center;
+    padding: 4px;
+  }
+  .stack-community {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
 
-
+@media (max-width: 350px){
+  .stack {
+    padding-left: 100px;
+  }
+  .stack-list-item {
+    font-size: 12px;
+    text-align: left;
+    padding: 4px;
+  }
+}

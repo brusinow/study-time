@@ -129,7 +129,7 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
         data: $scope.stack
       }).then(function success(data) {
          console.log("Success! ",data)
-        $location.path('/stacks/'+ $stateParams.id);
+        $location.path('/');
       }, function error(data) {
         console.log("Nope.")
       });
@@ -175,23 +175,9 @@ $http.delete('/api/stacks/'+ $stateParams.id + '/card/' + cardId, {params: {card
       });
   }
 
-  
-
-// $http.delete('/roles/' + roleid, {params: {userId: userID}}).then...
-  // Card.delete({id: id}, function success(data) {
-  //   console.log("data is: ",data);
-  //   $scope.cards.splice(cardIdx, 1);
-  // }, function error(data) {
-  //   console.log(data);
-  // });
-  // }
 }])
 
 studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stack', 'Auth','$http', function($scope, $location, $stateParams, Stack, Auth, $http) {
-  
-
-
-  
   $scope.stack = {
     cards: [{
       question: "",
