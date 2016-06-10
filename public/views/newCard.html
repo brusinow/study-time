@@ -1,14 +1,18 @@
 <h2>New Card</h2>
 <div class="row">
-  <div class="center-text col-xs-12 col-lg-6 col-lg-offset-3">
+  <div class="col-xs-12 col-lg-6 col-lg-offset-3">
     <form ng-submit="createCard()">
       <div class="form-group">
         <label for="question">Question:</label>
+        <div class="center-text">
         <input type="text" class="form-control" id="question" ng-model="question">
+        </div>
       </div>
       <div class="form-group">
         <label for="answer">Answer:</label>
+        <div class="center-text">
         <textarea class="form-control" rows="5" id="answer" ng-model="answer"></textarea>
+        </div>
       </div>
       <div class="center-text">
         <md-button type="submit" class="submit-btn md-raised">Submit</md-button>
