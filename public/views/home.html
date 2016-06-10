@@ -17,12 +17,14 @@
     </ul>
   </div>
 </div>
-
+<div class="center-text">
+<object ng-hide="Auth.isLoggedIn()" class="big-logo" data="./img/big-logo.svg" type="image/svg+xml"></object>
+</div>
+<h1 style="margin-top: 5px; margin-bottom: 20px;" ng-hide="Auth.isLoggedIn()">This is a Better Way to Study.</h1>
 
 <div ng-hide="Auth.isLoggedIn()" ng-controller="LoginCtrl">
-
+<h4 style="text-align: left; font-size: 16px;">Login:</h4>
 <form ng-submit="userLogin()">
-  <legend>Login</legend>
 
   <div class="form-group">
     <label for="email">Email</label>
@@ -32,8 +34,9 @@
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" placeholder="********" ng-model="user.password">
   </div>
-
-  <button type="submit" class="btn btn-primary">Login</button>
+   <div class="center-text">
+   <md-button type="submit" class="submit-btn md-raised">Submit</md-button>
+ </div>
 </form>
-<h3>Don't already have an account? <a href="/signup">Sign up for one here.</a></h3>
+<h4>Don't already have an account? <a href="/signup">Sign up for one here.</a></h4>
 </div>
