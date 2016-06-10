@@ -1,14 +1,17 @@
-<h1>New Stack</h1>
+<h2>New Stack</h2>
 
 <form ng-submit="createStack()">
-  <div class="inset" ng-controller="SwitchDemoCtrl" ng-cloak>
-  <md-switch ng-model="stack.public" aria-label="switch">
-    Public: {{ stack.public }}
+  <div class="center-text inset" ng-controller="SwitchDemoCtrl" ng-cloak>
+  
+  <md-switch style="display:inline-block;" ng-model="stack.public" aria-label="switch">
+    Public: <span style="font-weight: bold;">{{ stack.public }}</span>
   </md-switch>
   </div>
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" class="form-control" id="title" ng-model="stack.name">
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+   <div class="center-text">
+   <md-button type="submit" class="submit-btn md-raised">Submit</md-button>
+ </div>
 </form>

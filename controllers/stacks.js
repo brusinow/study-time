@@ -92,7 +92,7 @@ router.route('/:id/edit')
         console.log("stack is: ",stack);
         var stackCards = stack[0].stacks[0];
       if (err) return res.status(500).send(err);
-      // console.log("I want: ",stack.stacks[0].cards);
+      console.log("I want: ",stack[0].stacks[0]);
       // var stackCards = stack.stacks[0].cards
       res.send(stackCards);
     });

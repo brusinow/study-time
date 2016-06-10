@@ -1,4 +1,4 @@
-<h1>New Card</h1>
+<h2>New Card</h2>
 
 <form ng-submit="createCard()">
   <div class="form-group">
@@ -9,7 +9,9 @@
     <label for="answer">Answer:</label>
   <textarea class="form-control" rows="5" id="answer" ng-model="answer"></textarea>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="center-text">
+   <md-button type="submit" class="submit-btn md-raised">Submit</md-button>
+ </div>
 </form>
 
 <!-- <form ng-submit="createCard()" name="userForm">

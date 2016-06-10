@@ -3,9 +3,7 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 
 studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
 
-  $scope.user = Auth.currentUser();
- 
-  console.log(Auth.isLoggedIn());
+  $scope.currentUser = Auth.currentUser();
   $scope.Auth = Auth;
  
 
@@ -104,6 +102,11 @@ studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', fun
 
 
 studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$stateParams', 'Stack','Card', function($scope, $http, $location, $stateParams, Stack, Card) {
+  $scope.message = 'false';
+  $scope.onChange = function(cbState) {
+    $scope.message = cbState;
+  };
+
   $http({
       method: 'GET',
       url: '/api/stacks/' + $stateParams.id + '/edit',
@@ -111,6 +114,8 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
     }).then(function success(data) {
        console.log("Success! ",data.data);
        $scope.stack = data.data;
+       console.log(data.data.public);
+       $scope.stack.public = data.data.public;
        $scope.cards = data.data.cards;
     }, function error(data) {
       console.log("Nope.")

@@ -1,5 +1,8 @@
-<md-button ng-show="Auth.isLoggedIn()" href="/stacks/new" class="add-btn md-raised"> Add a Card Stack </md-button>
 
+<div class="center-text row">
+<md-button ng-show="Auth.isLoggedIn()" href="/stacks/new" class="add-btn md-raised"> Add a Card Stack </md-button>
+</div>
+<div class="row">
 <ul ng-show="Auth.isLoggedIn()">
   <li ng-repeat="stack in stacks">
     <div class="stack-list-item">
@@ -17,3 +20,24 @@
     </div>
   </li>
 </ul>
+</div>
+
+
+<div ng-hide="Auth.isLoggedIn()" ng-controller="LoginCtrl">
+
+<form ng-submit="userLogin()">
+  <legend>Login</legend>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" placeholder="test@test.com" ng-model="user.email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" placeholder="********" ng-model="user.password">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+<h3>Don't already have an account? <a href="/signup">Sign up for one here.</a></h3>
+</div>
