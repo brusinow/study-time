@@ -1,12 +1,25 @@
 var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngRoute", "ui.bootstrap"])
 
 
-studyApp.controller('HomeCtrl', ['$scope','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
+studyApp.controller('HomeCtrl', ['$scope','$window','$http','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $window, $http, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
 
   $scope.currentUser = Auth.currentUser();
   $scope.Auth = Auth;
  
-
+  $scope.user = {
+    username: '',
+    email: '',
+    password: '',
+  };
+  $scope.userLogin = function() {
+    $http.post('/api/auth', $scope.user).then(function success(res) {
+      Auth.saveToken(res.data.token);
+      console.log('Token:', res.data.token)
+      $window.location.reload();
+    }, function error(res) {
+      console.log(data);
+    });
+  }
 
 // This is working!
   Stack.query($scope.user, function success(data) {
