@@ -271,14 +271,14 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
   };
 });
 
-studyApp.controller('NavCtrl', ['$scope', '$location', 'Auth', function($scope, $location, Auth) {
+studyApp.controller('NavCtrl', ['$scope', '$window', '$location', 'Auth', function($scope, $window, $location, Auth) {
   
-  // if (Auth.isLoggedIn()){
-  //   var user = Auth.currentUser();
-  //   console.log("user is: ",user);
-  //   // $scope.currentUser = user._doc.username;
-  //   console.log("made it to my if")
-  // };
+  if (Auth.isLoggedIn()){
+    var user = Auth.currentUser();
+    console.log("user is: ",user);
+    // $scope.currentUser = user._doc.username;
+    console.log("made it to my if")
+  };
 
   $scope.Auth = Auth;
   console.log("Auth: ",$scope.Auth.isLoggedIn());
