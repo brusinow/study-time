@@ -11,8 +11,8 @@ Technologies used: Angularjs, Express, Node.js, MongoDB, Angular Material, and B
 Things to fix: After loading in from root route, reload of the route makes the entire window reload. $route.reload is not working.
 
 Room for improvement: 
--further desktop styling 
--allow sharing of stacks with specific users, not just a public/private stack option
--add category to cards
--have cards shuffle before loading
--ionic
+* further desktop styling 
+* allow sharing of stacks with specific users, not just a public/private stack option
+* add category to cards
+* have cards shuffle before loading
+* ionic
