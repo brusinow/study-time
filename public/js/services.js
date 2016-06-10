@@ -51,7 +51,9 @@ angular.module('StudyServices', ['ngResource', 'ngMaterial'])
           var payload = JSON.parse($window.atob(token.split('.')[1]));
           return payload;
         } catch(err) {
+          console.log("error");
           return false;
+          
         }
       }
     }
