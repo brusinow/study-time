@@ -11,8 +11,8 @@ var secret = "mysupersecretpassword";
 
 var mongoose = require('mongoose');
 var User = require('./models/user');
-mongoose.connect("mongodb://"+process.env.DBUSER+":"+process.env.DBPASSWORD+"@ds011314.mlab.com:11314/studytime");
-// mongoose.connect('mongodb://localhost/study_time');
+// mongoose.connect("mongodb://"+process.env.DBUSER+":"+process.env.DBPASSWORD+"@ds011314.mlab.com:11314/studytime");
+mongoose.connect('mongodb://localhost/study_time');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
