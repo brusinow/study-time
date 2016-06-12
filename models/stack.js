@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 
 var StackSchema = new mongoose.Schema({
   userId: String,
+  username: String,
   name: String,
   public: Boolean,
     cards: [{

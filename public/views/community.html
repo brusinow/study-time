@@ -4,8 +4,8 @@
     <ul>
       <li ng-repeat="stack in stacks">
         <div class="stack-list-item-community">
-        <a class="stack-community" ng-href="/stacks/community/{{stack.stacks._id}}">
-          {{stack.stacks.name}}
+        <a class="stack-community" ng-href="/stacks/community/{{stack._id}}">
+          {{stack.name}}
         </a><span>by {{stack.username}}</span>
         </div>
       </li>

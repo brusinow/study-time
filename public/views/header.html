@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
         </button>
          <a class="navbar-brand" href="/"><img ng-src="./img/logo.svg" alt="Study Time" /></a>
-         <h4 ng-show="Auth.isLoggedIn()">{{storage.user.username}}</h4>
+         <span class="logged-name logged-name-small" ng-show="Auth.isLoggedIn()">welcome, {{storage.user.username}}</span>
         <!--  <span>{{currentUser}}</span> -->
       </div>
 
@@ -22,5 +22,6 @@
           <li><a href="/login" ng-hide="Auth.isLoggedIn()">Login</a></li>
           <li><a href="#" ng-click="logout()" ng-show="Auth.isLoggedIn()">Logout</a></li>
         </ul>
+       <span class="logged-name logged-name-big" ng-show="Auth.isLoggedIn()">welcome, {{storage.user.username}}</span>
       </div><!-- /.navbar-collapse -->
     </nav>

@@ -25,36 +25,28 @@ router.route('/')
 
 
 
-// router.route("/community/") 
-//   .get(function(req, res){
-//     User.aggregate([ 
-//     // { "$unwind" : "$_id" },
-//     { "$unwind" : "$stacks" },
-//     { "$match" : {"stacks.public" : true}}
-//       ],
-//       function(err, stacks) {
-//         console.log("stacks are: ",stacks);
-//       if (err) return res.status(500).send(err);
-//        res.send(stacks);
-//     });
-//   })
+router.route("/community/") 
+  .get(function(req, res) {
+    console.log("Req.user: ",req.user);
+    Stack.find({'public': "true"}, function(err, stacks) {
+    if (err) return res.status(500).send(err);
+    res.send(stacks);
+    });
+  })
 
-// router.route("/community/:id") 
-//   .get(function(req, res) {
-//     console.log("req.params should be: ",req.params.id);
-//     User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
-//       function(err, stack) {
-//         console.log("stack is: ",stack);
-//         // var stackCards = stack[0].stacks[0];
-//       if (err) return res.status(500).send(err);
-//       // console.log("I want: ",stack);
-//       var stack = stack[0].stacks[0]
-//       res.send(stack);
-//     });
-//   })
-
-
-
+router.route("/community/:id") 
+  .get(function(req, res) {
+    console.log("req.params should be: ",req.params.id);
+    Stack.find({"_id" : req.params.id}, 
+      function(err, stack) {
+        console.log("correct route is: ",stack);
+        // var stackCards = stack[0].stacks[0];
+      if (err) return res.status(500).send(err);
+      // console.log("I want: ",stack);
+      // var stack = stack[0].stacks[0]
+      res.send(stack);
+    });
+  })
 
 
 router.route('/:id')
