@@ -1,8 +1,7 @@
-var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngRoute", "ui.bootstrap"])
+var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngRoute", "ui.bootstrap",'ngStorage'])
 
 
-studyApp.controller('HomeCtrl', ['$scope','$window','$http','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $window, $http, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
-
+studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $sessionStorage, $window, $http, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
   $scope.currentUser = Auth.currentUser();
   $scope.Auth = Auth;
  
@@ -11,15 +10,6 @@ studyApp.controller('HomeCtrl', ['$scope','$window','$http','$stateParams','Stac
     email: '',
     password: '',
   };
-  $scope.userLogin = function() {
-    $http.post('/api/auth', $scope.user).then(function success(res) {
-      Auth.saveToken(res.data.token);
-      console.log('Token:', res.data.token)
-      $window.location.reload();
-    }, function error(res) {
-      console.log(data);
-    });
-  }
 
 // This is working!
   Stack.query($scope.user, function success(data) {
@@ -91,7 +81,7 @@ console.log($stateParams.id);
 
 
 
-studyApp.controller('NewStackCtrl', ['$scope', '$location', 'Stack', 'Auth', function($scope, $location, Stack, Auth) {
+studyApp.controller('NewStackCtrl', ['$scope', '$sessionStorage', '$location', 'Stack', 'Auth', function($scope, $sessionStorage, $location, Stack, Auth) {
   $scope.stack = {
     name: '',
     public: ""
@@ -271,8 +261,9 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
   };
 });
 
-studyApp.controller('NavCtrl', ['$scope', '$window', '$location', 'Auth', function($scope, $window, $location, Auth) {
-  
+studyApp.controller('NavCtrl', ['$scope', '$sessionStorage', '$window', '$location', 'Auth', function($scope, $sessionStorage, $window, $location, Auth) {
+  $scope.storage = $sessionStorage;
+  console.log($scope.storage.user);
   if (Auth.isLoggedIn()){
     var user = Auth.currentUser();
     // $scope.currentUser = user._doc.username;
@@ -283,6 +274,7 @@ studyApp.controller('NavCtrl', ['$scope', '$window', '$location', 'Auth', functi
   
   $scope.logout = function() {
     Auth.removeToken();
+    $sessionStorage = '';
     console.log('My token:', Auth.getToken());
   }
 }])
@@ -308,7 +300,8 @@ studyApp.controller('SignupCtrl', ['$scope', '$http', '$location','Auth', functi
   }
 }])
 
-studyApp.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', function($scope, $http, $location, Auth) {
+studyApp.controller('LoginCtrl', ['$scope', '$sessionStorage', '$http', '$location', 'Auth', function($scope, $sessionStorage, $http, $location, Auth) {
+
   $scope.user = {
     username: '',
     email: '',
@@ -316,6 +309,7 @@ studyApp.controller('LoginCtrl', ['$scope', '$http', '$location', 'Auth', functi
   };
   $scope.userLogin = function() {
     $http.post('/api/auth', $scope.user).then(function success(res) {
+      $sessionStorage.user = res.data.user;
       Auth.saveToken(res.data.token);
       console.log('Token:', res.data.token)
       $location.path('/');

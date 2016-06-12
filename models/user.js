@@ -15,7 +15,7 @@ UserSchema.set('toJSON', {
     var returnJson = {
       id: ret._id,
       email: ret.email,
-      name: ret.name
+      username: ret.username
     };
     return returnJson;
   }

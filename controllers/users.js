@@ -6,6 +6,7 @@ router.route('/')
   .get(function(req, res) {
     User.find(function(err, users) {
       if (err) return res.status(500).send(err);
+       console.log("user Id is: ",users._id);
       res.send(users);
     });
   })
@@ -20,8 +21,8 @@ router.get('/:id', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     console.log(user);
     if (err) return res.status(500).send(err);
-    console.log("user Id is: ",user._id);
-    // res.session.currentUser = user._id
+
+    
     res.send(user);
   });
 });

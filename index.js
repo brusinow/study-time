@@ -47,7 +47,6 @@ app.post('/api/auth', function(req, res) {
     if (err || !user) return res.status(401).send({message: 'User not found'});
     user.authenticated(req.body.password, function(err, result) {
       if (err || !result) return res.status(401).send({message: 'User not authenticated'});
-
       var token = jwt.sign(user, secret);
       res.send({user: user, token: token});
     });
