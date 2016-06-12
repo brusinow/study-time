@@ -150,7 +150,22 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
 
 
 
-studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card', 'Auth', function($scope, $http, $stateParams, Stack, Card, Auth) {
+studyApp.controller('CardCtrl', ['$scope', '$route', '$http','$stateParams', 'Stack','Card', 'Auth', function($scope, $route, $http, $stateParams, Stack, Card, Auth) {
+  $scope.shuffle=false;
+
+  if ($scope.shuffle){
+  $scope.random = function(){
+    return 0.5 - Math.random();
+  };
+  var currentPageTemplate = $route.current.templateUrl;
+  $templateCache.remove(currentPageTemplate);
+   console.log("reload my route");
+  $route.reload();
+  } else if(!$scope.shuffle){
+   $scope.random = ""; 
+    console.log("do nothing");
+  }
+
   $scope.loading = true;
   $scope.cards = []
 
