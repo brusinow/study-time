@@ -45,14 +45,10 @@ angular.module('StudyServices', ['ngResource', 'ngMaterial'])
       return token ? true : false;
     },
     currentUser: function() {
-      console.log("inside currentUser function");
       if (this.isLoggedIn()) {
-        console.log("inside if currentUser");
         var token = this.getToken();
         try {
-          console.log("inside try");
           var payload = JSON.parse($window.atob(token.split('.')[1]));
-          console.log("payload is: ",payload);
           return payload;
         } catch(err) {
           return false;

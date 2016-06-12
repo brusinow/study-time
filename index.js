@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
 var expressJWT = require('express-jwt');
@@ -13,6 +14,16 @@ var mongoose = require('mongoose');
 var User = require('./models/user');
 // mongoose.connect("mongodb://"+process.env.DBUSER+":"+process.env.DBPASSWORD+"@ds011314.mlab.com:11314/studytime");
 mongoose.connect('mongodb://localhost/study_time');
+
+
+
+app.use(session({
+  secret: 'dsalkfjasdflkjgdfblknbadiadsnkl',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false },
+  currentUser: ''
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

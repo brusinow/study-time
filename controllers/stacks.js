@@ -1,5 +1,6 @@
 var express = require('express');
 var User = require('../models/user');
+var Stack = require('../models/stack');
 var router = express.Router();
 var Mongoose = require('mongoose');
 var ObjectId = Mongoose.Types.ObjectId;
@@ -16,7 +17,7 @@ router.route('/')
   })
   .post(function(req,res){
     console.log("Req.body for newStack route is: ",req.body);
-    User.update({"email": req.body.user._doc.email}, {$push: {stacks: req.body}}, function(err, stack) {
+    Stack.update({"email": req.body.user._doc.email}, {$push: {stacks: req.body}}, function(err, stack) {
       if (err) return res.status(500).send(err);
       res.send(stack);
     });

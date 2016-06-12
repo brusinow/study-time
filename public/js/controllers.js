@@ -23,7 +23,7 @@ studyApp.controller('HomeCtrl', ['$scope','$window','$http','$stateParams','Stac
 
 // This is working!
   Stack.query($scope.user, function success(data) {
-    console.log("This is some data: ",data);
+    // console.log("This is some data: ",data);
     $scope.stacks = data;
 
 
@@ -275,13 +275,10 @@ studyApp.controller('NavCtrl', ['$scope', '$window', '$location', 'Auth', functi
   
   if (Auth.isLoggedIn()){
     var user = Auth.currentUser();
-    console.log("user is: ",user);
     // $scope.currentUser = user._doc.username;
-    console.log("made it to my if")
   };
 
   $scope.Auth = Auth;
-  console.log("Auth: ",$scope.Auth.isLoggedIn());
 
   
   $scope.logout = function() {
