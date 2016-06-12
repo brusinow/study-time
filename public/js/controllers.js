@@ -2,22 +2,22 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 
 
 studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $sessionStorage, $window, $http, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
+  $scope.stacks = [];
+
   $scope.currentUser = Auth.currentUser();
   $scope.Auth = Auth;
  
-  $scope.user = {
-    username: '',
-    email: '',
-    password: '',
-  };
+  // $scope.user = {
+  //   username: '',
+  //   email: '',
+  //   password: '',
+  // };
 
-// This is working!
-  Stack.query($scope.user, function success(data) {
-    // console.log("This is some data: ",data);
+  $scope.user = $sessionStorage.user;
+
+  Stack.query(function success(data) {
+    console.log("This is some data: ",data);
     $scope.stacks = data;
-
-
-
   }, function error(data) {
     console.log(data);
   });
@@ -82,18 +82,18 @@ console.log($stateParams.id);
 
 
 studyApp.controller('NewStackCtrl', ['$scope', '$sessionStorage', '$location', 'Stack', 'Auth', function($scope, $sessionStorage, $location, Stack, Auth) {
+  
+
   $scope.stack = {
-    name: '',
-    public: ""
+      userId: $sessionStorage.user.id,
+      name: "",
+      public: ""
   };
 
 
   
 
   $scope.createStack = function() {
-    console.log($scope.user);
-    console.log(Auth.currentUser());
-    $scope.stack.user = Auth.currentUser();
     Stack.save($scope.stack, function success(data) {
       console.log("Success! ",data)
       $location.path('/');
@@ -263,7 +263,7 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
 
 studyApp.controller('NavCtrl', ['$scope', '$sessionStorage', '$window', '$location', 'Auth', function($scope, $sessionStorage, $window, $location, Auth) {
   $scope.storage = $sessionStorage;
-  console.log($scope.storage.user);
+  // console.log($scope.storage.user);
   if (Auth.isLoggedIn()){
     var user = Auth.currentUser();
     // $scope.currentUser = user._doc.username;

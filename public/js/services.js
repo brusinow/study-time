@@ -1,8 +1,5 @@
 angular.module('StudyServices', ['ngResource', 'ngMaterial'])
 
-
-
-
 .factory('Stack', ['$resource', function($resource) {
   return $resource('/api/stacks/:id');
 }])

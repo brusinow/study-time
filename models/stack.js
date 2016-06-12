@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 
 var StackSchema = new mongoose.Schema({
-  _creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  userId: String,
   name: String,
   public: Boolean,
     cards: [{
