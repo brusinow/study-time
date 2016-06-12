@@ -57,31 +57,44 @@ router.route("/community/:id")
 
 
 
-// router.route('/:id')
-//   .get(function(req, res) {
-//     console.log(req.params.id);
-//     User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
-//       function(err, stack) {
-//         // console.log("stack is: ",stack[0].stacks[0]);
-//         var stackCards = stack[0].stacks[0];
-//       if (err) return res.status(500).send(err);
-//       // console.log("I want: ",stack.stacks[0].cards);
-//       // var stackCards = stack.stacks[0].cards
-//       res.send(stackCards);
-//     });
-//   })
-//   .delete(function(req, res) {
-//     console.log("params should be: ",req.params.id);
-//     User.update(
-//     {},
-//     { "$pull": { 'stacks': {"_id" : req.params.id} } },
-//     function(err){
-//       if (err) return res.status(500).send(err);
-//       console.log("success?");
-//       res.send({'message': 'success'});
-//     }
-//     );
-//   });
+router.route('/:id')
+  .get(function(req, res) {
+    console.log(req.params.id);
+    User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
+      function(err, stack) {
+        // console.log("stack is: ",stack[0].stacks[0]);
+        var stackCards = stack[0].stacks[0];
+      if (err) return res.status(500).send(err);
+      // console.log("I want: ",stack.stacks[0].cards);
+      // var stackCards = stack.stacks[0].cards
+      res.send(stackCards);
+    });
+  })
+  .delete(function(req, res) {
+    Stack.findByIdAndRemove(req.params.id, function(err) {
+      if (err) return res.status(500).send(err);
+      res.send({'message': 'success'});
+    });
+  });
+
+
+
+
+
+
+
+  // .delete(function(req, res) {
+  //   console.log("params should be: ",req.params.id);
+  //   User.update(
+  //   {},
+  //   { "$pull": { 'stacks': {"_id" : req.params.id} } },
+  //   function(err){
+  //     if (err) return res.status(500).send(err);
+  //     console.log("success?");
+  //     res.send({'message': 'success'});
+  //   }
+  //   );
+  // });
 
 
 router.route('/:id/edit')

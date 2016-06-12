@@ -22,20 +22,18 @@ studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$
     console.log(data);
   });
 
-
-
   $scope.delete = function(id, stacksIdx) {
-      console.log("id is: ",id);
-      console.log("stacksIdx: ",stacksIdx);
-      verifyDeleteStack(id).then(function() {
-        console.log("made it through confirm");
-       Stack.delete({id: id}, function success(data) {
-      $scope.stacks.splice(stacksIdx, 1);
-      }, function error(data) {
-      console.log(data);
-      });
-      });
-}
+    console.log("id is: ",id);
+    console.log("stacksIdx: ",stacksIdx);
+    verifyDeleteStack(id).then(function() {
+    console.log("made it through confirm");
+    Stack.delete({id: id}, function success(data) {
+    $scope.stacks.splice(stacksIdx, 1);
+    }, function error(data) {
+    console.log(data);
+    });
+    });
+  }
 
 }])
 
