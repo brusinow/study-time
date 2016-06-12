@@ -11,7 +11,7 @@ router.route('/')
     console.log("Req.user: ",req.user);
     Stack.find({'userId': req.user._doc._id}, function(err, stacks) {
       if (err) return res.status(500).send(err);
-      console.log("stacks are: ",stacks);
+      // console.log("stacks are: ",stacks);
       res.send(stacks);
     });
   })
@@ -25,33 +25,33 @@ router.route('/')
 
 
 
-router.route("/community/") 
-  .get(function(req, res){
-    User.aggregate([ 
-    // { "$unwind" : "$_id" },
-    { "$unwind" : "$stacks" },
-    { "$match" : {"stacks.public" : true}}
-      ],
-      function(err, stacks) {
-        console.log("stacks are: ",stacks);
-      if (err) return res.status(500).send(err);
-       res.send(stacks);
-    });
-  })
+// router.route("/community/") 
+//   .get(function(req, res){
+//     User.aggregate([ 
+//     // { "$unwind" : "$_id" },
+//     { "$unwind" : "$stacks" },
+//     { "$match" : {"stacks.public" : true}}
+//       ],
+//       function(err, stacks) {
+//         console.log("stacks are: ",stacks);
+//       if (err) return res.status(500).send(err);
+//        res.send(stacks);
+//     });
+//   })
 
-router.route("/community/:id") 
-  .get(function(req, res) {
-    console.log("req.params should be: ",req.params.id);
-    User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
-      function(err, stack) {
-        console.log("stack is: ",stack);
-        // var stackCards = stack[0].stacks[0];
-      if (err) return res.status(500).send(err);
-      // console.log("I want: ",stack);
-      var stack = stack[0].stacks[0]
-      res.send(stack);
-    });
-  })
+// router.route("/community/:id") 
+//   .get(function(req, res) {
+//     console.log("req.params should be: ",req.params.id);
+//     User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
+//       function(err, stack) {
+//         console.log("stack is: ",stack);
+//         // var stackCards = stack[0].stacks[0];
+//       if (err) return res.status(500).send(err);
+//       // console.log("I want: ",stack);
+//       var stack = stack[0].stacks[0]
+//       res.send(stack);
+//     });
+//   })
 
 
 
@@ -104,30 +104,32 @@ router.route('/:id')
 
 router.route('/:id/edit')
   .get(function(req,res){
-    User.find(
-      {"stacks._id" : req.params.id},
-      {stacks: {$elemMatch: {_id: req.params.id}}}, 
-      function(err, stack) {
-        console.log("stack is: ",stack);
-        var stackCards = stack[0].stacks[0];
-      if (err) return res.status(500).send(err);
-      console.log("I want: ",stack[0].stacks[0]);
-      // var stackCards = stack.stacks[0].cards
-      res.send(stackCards);
+    Stack.find(
+    {"_id" : req.params.id},
+    function(err, stack) {
+    var editStack = stack[0];
+    if (err) return res.status(500).send(err);
+    res.send(editStack);
     });
   })
-  .post(function(req,res){
-    console.log("Req.body for editStack route is: ",req.body);
-    console.log("should be stack id: ",req.params.id);
-    User.update(
-      {"stacks._id": req.params.id},
-      { "$set" : {"stacks.$": req.body}},
-   
-      function(err, stack) {
+  .put(function(req, res) {
+    Stack.findByIdAndUpdate(req.params.id, req.body, function(err) {
       if (err) return res.status(500).send(err);
-      res.send(stack);
+      res.send({'message': 'success'});
     });
-  });
+  })
+  // .post(function(req,res){
+  //   console.log("Req.body for editStack route is: ",req.body);
+  //   console.log("should be stack id: ",req.params.id);
+  //   User.update(
+  //     {"_id": req.params.id},
+  //     { "$set" : {"$": req.body}},
+   
+  //     function(err, stack) {
+  //     if (err) return res.status(500).send(err);
+  //     res.send(stack);
+  //   });
+  // });
 
 
 

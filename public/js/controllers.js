@@ -125,7 +125,7 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
 
     $scope.editStack = function() {
       $http({
-        method: 'POST',
+        method: 'PUT',
         url: '/api/stacks/' + $stateParams.id + '/edit',
         data: $scope.stack
       }).then(function success(data) {
