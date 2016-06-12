@@ -166,9 +166,8 @@ studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card
     console.log("Card id is: ",id);
     console.log("Index of card is: ",cardIdx)
     var cardId = id;
-
-$http.delete('/api/stacks/'+ $stateParams.id + '/card/' + cardId, {params: {cardId: cardId}
-}).then(function success(data) {
+    $http.delete('/api/stacks/'+ $stateParams.id + '/card/' + cardId, {params: {stackId: $stateParams.id, cardId: cardId}
+    }).then(function success(data) {
          console.log("Success! ",data);
         $scope.cards.splice(cardIdx, 1);
       }, function error(data) {

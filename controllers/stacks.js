@@ -135,17 +135,13 @@ router.route('/:id/card')
   .post(function(req,res){
     console.log("Req.body for newCard route is: ",req.body);
     console.log("Id from params is: ",req.params.id)
-    User.update(
-      {"stacks._id": req.params.id},
-      { "$push": { "stacks.$.cards": req.body } },
-      function(err, stack) {
+    Stack.update(
+      {"_id": req.params.id},
+      { "$push": { "cards": req.body } },
+      function(err, cards) {
       if (err) return res.status(500).send(err);
-      res.send(stack);
+      res.send(cards);
     });
-    // Stack.findByIdAndUpdate(req.params.id, req.body, function(err){
-    //  if (err) return res.status(500).send(err);
-    //  res.send(stack);  
-    // })
   })
 
 
@@ -154,10 +150,10 @@ router.route('/:id/card')
 router.route('/:id/card/:id')  
   .delete(function(req, res) {
     console.log("hitting card delete route");
-    console.log("req.params is: ",req.params);
-    User.update(
-    {"stacks.cards._id": req.params.id},
-    { "$pull": { "stacks.$.cards": {"_id" : req.params.id}}},
+    console.log("req.params is: ",req.query);
+    Stack.update(
+    {"_id": req.query.stackId},
+    { "$pull": { "cards": {"_id" : req.query.cardId}}},
      function(err) {
       if (err) return res.status(500).send(err);
       res.send({'message': 'success'});
