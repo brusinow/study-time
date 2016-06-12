@@ -6,6 +6,7 @@
 
   </div>
 </div>
+<div ng-if="visible" class="fade">
 <div class="row">
   <h2 ng-show="loggedIn" style="text-align: center; margin-top:0px;">{{stackName}}</h2>
   <div class="center-text col-xs-12 col-lg-4 col-lg-offset-4">
@@ -38,6 +39,7 @@ glyphicon glyphicon-pencil" aria-hidden="true"></span></div></a>
     <div ng-click="delete(card._id, $index)" class="delete-card"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
     </div>
   </div>
+</div>
 </div>
 
 

@@ -2,7 +2,6 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 
 
 studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $sessionStorage, $window, $http, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
-  
   $scope.loading = true;
   $scope.stacks = [];
 
@@ -19,6 +18,7 @@ studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$
 
   Stack.query(function success(data) {
     $scope.loading = false;
+    $scope.visible = true;
     console.log("This is some data: ",data);
     $scope.stacks = data;
   }, function error(data) {
@@ -164,6 +164,7 @@ studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card
       url: '/api/stacks/' + $stateParams.id,
       data: $stateParams.id
     }).then(function success(data) {
+       $scope.visible = true;
       $scope.loading = false;
        // console.log("Success! ",data.data.name);
        $scope.stackName = data.data.name;
