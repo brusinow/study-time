@@ -145,11 +145,6 @@ router.route('/:id/card')
       res.send(cards);
     });
   })
-
-
-
-
-router.route('/:id/card/:id')  
   .delete(function(req, res) {
     console.log("hitting card delete route");
     console.log("req.params is: ",req.query);
@@ -164,50 +159,83 @@ router.route('/:id/card/:id')
 
 
 router.route('/:stackId/:cardId/card/edit')
-  .get(function(req,res){
-    User.aggregate([ 
-    // { "$unwind" : "$_id" },
-    { "$unwind" : "$stacks" },
-    { "$match" : {"stacks._id" : ObjectId(req.params.stackId) }},
-    { "$unwind" : "$stacks.cards"},
-    { "$match" : {"stacks.cards._id" : ObjectId(req.params.cardId) }}
-      ],
-      function(err, card) {
-        var thisCard = card[0].stacks.cards;
+   .get(function(req,res){
+    console.log("req is: ",req.params)
+    Stack.find(
+      {"_id" : req.params.stackId},
+      {cards: {$elemMatch: {_id: req.params.cardId}}}, 
+      function(err, stack) {
+      var stackCards = stack[0].cards[0];
       if (err) return res.status(500).send(err);
-       res.send(thisCard);
-    });
-  })
-  .post(function(req,res){
-    //console.log("Req.body for editCard route is: ",req.body);
-    //console.log("should be card id: ",req.params.cardId);
-    User.findOne({"stacks._id": req.params.stackId}, function(err, user) {
-      // console.log('Stack ID: ', ObjectId(user.stacks[1]._id).toString());
-      // console.log(typeof(ObjectId(user.stacks[1]._id).toString()));
-      // console.log('Incoming Stack ID: ', req.params.stackId)
-      // console.log(typeof(req.params.stackId));
-      for(var i = 0; i < user.stacks.length; i++) {
-        //console.log('Stack ID: ', user.stacks[i]._id);
-        if(req.params.stackId === ObjectId(user.stacks[i]._id).toString()) {
-          console.log('Stack ID: ', user.stacks[i]._id);
-          for(var j = 0; j < user.stacks[i].cards.length; j++) {
-            if(req.params.cardId === ObjectId(user.stacks[i].cards[j]._id).toString()) {
-              console.log('Card ID', user.stacks[i].cards[j]._id);
-              user.stacks[i].cards[j] = req.body;
-            }
-          }
-        }
-      }
-
-      user.save().then(function(err, user) {
-      res.send(user);
+      res.send(stackCards);
       });
+    })
+    .post(function(req,res){
+    console.log("Req.body for editStack route is: ",req.body);
+    console.log("should be stack id: ",req.params.stackId);
+    console.log("should be card id: ",req.params.cardId);
+    Stack.update(
+      {"cards._id": req.params.cardId},
+      { "$set" : {"cards.$": req.body}},
+      function(err, stack) {
+        console.log("stack after post is: ",stack);
+      // if (err) return res.status(500).send(err);
+      res.send(stack);
+    });
+  });
+
+
+
+
+
+
+
+
+
+  // .get(function(req,res){
+  //   User.aggregate([ 
+  //   // { "$unwind" : "$_id" },
+  //   { "$unwind" : "$stacks" },
+  //   { "$match" : {"stacks._id" : ObjectId(req.params.stackId) }},
+  //   { "$unwind" : "$stacks.cards"},
+  //   { "$match" : {"stacks.cards._id" : ObjectId(req.params.cardId) }}
+  //     ],
+  //     function(err, card) {
+  //       var thisCard = card[0].stacks.cards;
+  //     if (err) return res.status(500).send(err);
+  //      res.send(thisCard);
+  //   });
+  // })
+  // .post(function(req,res){
+  //   //console.log("Req.body for editCard route is: ",req.body);
+  //   //console.log("should be card id: ",req.params.cardId);
+  //   User.findOne({"stacks._id": req.params.stackId}, function(err, user) {
+  //     // console.log('Stack ID: ', ObjectId(user.stacks[1]._id).toString());
+  //     // console.log(typeof(ObjectId(user.stacks[1]._id).toString()));
+  //     // console.log('Incoming Stack ID: ', req.params.stackId)
+  //     // console.log(typeof(req.params.stackId));
+  //     for(var i = 0; i < user.stacks.length; i++) {
+  //       //console.log('Stack ID: ', user.stacks[i]._id);
+  //       if(req.params.stackId === ObjectId(user.stacks[i]._id).toString()) {
+  //         console.log('Stack ID: ', user.stacks[i]._id);
+  //         for(var j = 0; j < user.stacks[i].cards.length; j++) {
+  //           if(req.params.cardId === ObjectId(user.stacks[i].cards[j]._id).toString()) {
+  //             console.log('Card ID', user.stacks[i].cards[j]._id);
+  //             user.stacks[i].cards[j] = req.body;
+  //           }
+  //         }
+  //       }
+  //     }
+
+  //     user.save().then(function(err, user) {
+  //     res.send(user);
+  //     });
 
       // User.update({_id: user._id}, {$set : {"stacks.stackIndex.cards.$": req.body}}, function(err, card) {
       //   console.log(card),
       //   console.log(err);
       // });
-    });
+    // });
     // User.update(
     //   {"stacks._id": req.params.stackId}, {$set: {"stacks.$.cards": {_id: req.params.cardId}}}
     //   // {"stacks._id" : req.params.stackId, "stacks.cards._id": req.params.cardId},
@@ -218,7 +246,7 @@ router.route('/:stackId/:cardId/card/edit')
     //   console.log(card);
     //   //res.send(card);
     // });
-  });
+  // });
  // User.find({"stacks._id" : req.params.id},{stacks: {$elemMatch: {_id: req.params.id}}}, 
 // db.schools.find( { zipcode: "63109" },
 //                  { students: { $elemMatch: { school: 102 } } } )
