@@ -137,12 +137,15 @@ router.route('/:id/card')
       res.send(cards);
     });
   })
+
+
+ router.route('/:stackId/card/:cardId') 
   .delete(function(req, res) {
     console.log("hitting card delete route");
-    console.log("req.params is: ",req.query);
+    console.log("req.params is: ",req.params);
     Stack.update(
-    {"_id": req.query.stackId},
-    { "$pull": { "cards": {"_id" : req.query.cardId}}},
+    {"_id": req.params.stackId},
+    { "$pull": { "cards": {"_id" : req.params.cardId}}},
      function(err) {
       if (err) return res.status(500).send(err);
       res.send({'message': 'success'});

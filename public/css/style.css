@@ -26,6 +26,10 @@ nav {
   font-weight: 800;
 }
 
+.loading-box {
+  margin: 10% auto 10% auto;
+}
+
 .byline {
   font-size:1.2em;
   text-align: center;

@@ -18,6 +18,11 @@
   </div>
 </div>
 <div class="center-text">
+  <div class="loading-box" ng-if="loading">
+    <img src="./img/rolling.gif">
+  </div>
+</div>
+<div ng-if="!submitted" class="center-text">
 <object ng-hide="Auth.isLoggedIn()" class="big-logo" data="./img/big-logo.svg" type="image/svg+xml"></object>
 </div>
 <h1 style="margin-top: 5px; margin-bottom: 20px;" ng-hide="Auth.isLoggedIn()">This is a Better Way to Study.</h1>

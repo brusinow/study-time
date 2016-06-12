@@ -12,6 +12,11 @@
     <md-button ng-show="loggedIn" href="/stacks/{{stackId}}/card" class="add-btn md-raised"> Add a Card to Stack </md-button>
   </div>
 </div>
+<div class="center-text">
+  <div class="loading-box" ng-if="loading">
+    <img src="./img/rolling.gif">
+  </div>
+</div>
 <div class="row">
   <div ng-show="loggedIn" ng-repeat="card in cards">
     <div class="card col-xs-12 col-lg-4">

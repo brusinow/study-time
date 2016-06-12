@@ -2,6 +2,8 @@ var studyApp = angular.module('StudyCtrls', ['StudyServices', "ngMaterial", "ngR
 
 
 studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$stateParams','Stack', 'verifyDeleteStack', 'Auth', function($scope, $sessionStorage, $window, $http, $stateParams, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
+  
+  $scope.loading = true;
   $scope.stacks = [];
 
   $scope.currentUser = Auth.currentUser();
@@ -16,6 +18,7 @@ studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$
   $scope.user = $sessionStorage.user;
 
   Stack.query(function success(data) {
+    $scope.loading = false;
     console.log("This is some data: ",data);
     $scope.stacks = data;
   }, function error(data) {
@@ -38,13 +41,14 @@ studyApp.controller('HomeCtrl', ['$scope','$sessionStorage','$window','$http','$
 }])
 
 studyApp.controller('CommunityCtrl', ['$scope', '$sessionStorage', '$stateParams', '$http', 'Stack', 'verifyDeleteStack', 'Auth', function($scope,$sessionStorage,$stateParams, $http, Stack, verifyDeleteStack, Auth, $mdDialog, $mdMedia){
-
+  $scope.loading = true;
 
 
  $http({
       method: 'GET',
       url: '/api/stacks/community/'
     }).then(function success(data) {
+      $scope.loading = false;
        console.log("Success! ",data.data);
        $scope.stacks = data.data;
     }, function error(data) {
@@ -147,6 +151,7 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
 
 
 studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card', 'Auth', function($scope, $http, $stateParams, Stack, Card, Auth) {
+  $scope.loading = true;
   $scope.cards = []
 
   $scope.loggedIn = Auth.isLoggedIn();
@@ -159,6 +164,7 @@ studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card
       url: '/api/stacks/' + $stateParams.id,
       data: $stateParams.id
     }).then(function success(data) {
+      $scope.loading = false;
        // console.log("Success! ",data.data.name);
        $scope.stackName = data.data.name;
        $scope.cards = data.data.cards;
@@ -171,8 +177,7 @@ studyApp.controller('CardCtrl', ['$scope', '$http','$stateParams', 'Stack','Card
     console.log("Card id is: ",id);
     console.log("Index of card is: ",cardIdx)
     var cardId = id;
-    $http.delete('/api/stacks/'+ $stateParams.id + '/card/' + cardId, {params: {stackId: $stateParams.id, cardId: cardId}
-    }).then(function success(data) {
+    $http.delete('/api/stacks/'+ $stateParams.id + '/card/' + cardId).then(function success(data) {
          console.log("Success! ",data);
         $scope.cards.splice(cardIdx, 1);
       }, function error(data) {
@@ -195,6 +200,7 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
  var stackId = $stateParams.id;
   console.log("Stack id is: ",stackId);
   $scope.createCard = function() {
+ 
     var newCard = {
       question: $scope.question,
       answer: $scope.answer,
@@ -215,7 +221,7 @@ studyApp.controller('NewCardCtrl', ['$scope', '$location', '$stateParams', 'Stac
 }])
 
 studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$stateParams', 'Stack','Card', function($scope, $http, $location, $stateParams, Stack, Card) {
- 
+ $scope.loading = false;
  console.log($stateParams);
 
 
@@ -233,6 +239,7 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
 
 
     $scope.editCard = function() {
+       $scope.loading = true;
       $http({
         method: 'POST',
         url: '/api/stacks/' + $stateParams.stackId + '/'+$stateParams.cardId+'/card/edit',
@@ -241,6 +248,7 @@ studyApp.controller('EditCardCtrl', ['$scope', '$http', '$location', '$statePara
           answer: $scope.answer
         }
       }).then(function success(data) {
+         $scope.loading = false;
          console.log("Success! ",data)
         $location.path('/stacks/'+ $stateParams.stackId);
       }, function error(data) {
@@ -304,13 +312,16 @@ studyApp.controller('SignupCtrl', ['$scope', '$sessionStorage', '$http', '$locat
 }])
 
 studyApp.controller('LoginCtrl', ['$scope', '$sessionStorage', '$http', '$location', 'Auth', function($scope, $sessionStorage, $http, $location, Auth) {
-
+  $scope.loading = false;
+  $scope.submitted = false;
   $scope.user = {
     username: '',
     email: '',
     password: '',
   };
   $scope.userLogin = function() {
+    $scope.loading = true;
+    $scope.submitted = true;
     $http.post('/api/auth', $scope.user).then(function success(res) {
       $sessionStorage.user = res.data.user;
       Auth.saveToken(res.data.token);
