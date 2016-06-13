@@ -151,9 +151,9 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
 
 
 studyApp.controller('CardCtrl', ['$scope', '$route', '$http','$stateParams', 'Stack','Card', 'Auth', function($scope, $route, $http, $stateParams, Stack, Card, Auth) {
-  $scope.random = function(){
-    return 0.5 - Math.random();
-  };
+  // $scope.random = function(){
+  //   return 0.5 - Math.random();
+  // };
 
   $scope.loading = true;
   $scope.cards = []
