@@ -19,7 +19,7 @@
   </div>
 </div>
 <div class="row">
-  <div ng-show="loggedIn" ng-repeat="card in cards">
+  <div ng-show="loggedIn" ng-repeat="card in cards | orderBy:random">
     <div class="card col-xs-12 col-lg-4">
       <div ng-hide="card.show" class="card-question">
         <div class="card-click-area" ng-click="card.show=!card.show">
