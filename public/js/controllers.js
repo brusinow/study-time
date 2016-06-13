@@ -151,18 +151,17 @@ studyApp.controller('EditStackCtrl', ['$scope', '$http', '$location', '$statePar
 
 
 studyApp.controller('CardCtrl', ['$scope', '$route', '$http','$stateParams', 'Stack','Card', 'Auth', function($scope, $route, $http, $stateParams, Stack, Card, Auth) {
-  // $scope.random = function(){
-  //   return 0.5 - Math.random();
-  // };
+  $scope.randomSort = function(contact) {
+    console.log("random sort triggered...");
+  return Math.random();
+  };
+
 
   $scope.loading = true;
-  $scope.cards = []
-
+  $scope.cards = [];
   $scope.loggedIn = Auth.isLoggedIn();
-
   $scope.stackId = $stateParams.id;
   console.log($stateParams);
-
   $http({
       method: 'GET',
       url: '/api/stacks/' + $stateParams.id,
